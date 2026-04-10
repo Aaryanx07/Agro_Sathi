@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="{{ 'hi' if lang == 'hi' else 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro Saarthi Result</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #E8F5E9, #F9F6EF);
+            color: #263238;
+        }
+
+        .app {
+            max-width: 480px;
+            margin: auto;
+            min-height: 100vh;
+            background: #F9F6EF;
+            box-shadow: 0 0 20px rgba(0,0,0,0.10);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            padding: 20px;
+            border-bottom-left-radius: 22px;
+            border-bottom-right-radius: 22px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        .section {
+            padding: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            border: 1px solid #C8E6C9;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            margin: 0 0 12px;
+            color: #2E7D32;
+            font-size: 18px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .box {
+            background: #F9F6EF;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #C8E6C9;
+        }
+
+        .label {
+            font-size: 12px;
+            color: #5F6B6D;
+            margin-bottom: 6px;
+        }
+
+        .value {
+            font-weight: bold;
+            color: #2E7D32;
+            line-height: 1.5;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .severity-badge.healthy {
+            background: #E8F5E9;
+            color: #1B5E20;
+        }
+
+        .severity-badge.mild {
+            background: #FFF8E1;
+            color: #F9A825;
+        }
+
+        .severity-badge.moderate {
+            background: #FFF3E0;
+            color: #EF6C00;
+        }
+
+        .severity-badge.severe {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+
+        .severity-note {
+            margin-top: 8px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #5F6B6D;
+        }
+
+        .meter-card {
+            background: linear-gradient(180deg, #FFFFFF, #F7FBF7);
+        }
+
+        .meter-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .meter-percent {
+            font-weight: bold;
+            color: #1B5E20;
+            font-size: 15px;
+        }
+
+        .meter-track {
+            width: 100%;
+            height: 16px;
+            background: #E0E0E0;
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .meter-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 999px;
+            transition: width 1s ease;
+            background: linear-gradient(90deg, #66BB6A, #FBC02D, #FB8C00, #E53935);
+        }
+
+        .meter-scale {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #607D8B;
+            margin-top: 8px;
+        }
+
+        .meter-note-text {
+            margin-top: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #455A64;
+        }
+
+        .action-box {
+            border-left: 6px solid #F9A825;
+            background: #FFFDF7;
+        }
+
+        .action-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #263238;
+        }
+
+        .action-subtitle {
+            font-size: 13px;
+            color: #546E7A;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .action-points {
+            padding-left: 18px;
+            margin: 0;
+            line-height: 1.7;
+            color: #37474F;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #C8E6C9;
+            display: block;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            background: #2E7D32;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .btn:hover {
+            background: #1B5E20;
+        }
+
+        .voice-btn {
+            width: 100%;
+            text-align: center;
+            background: #1565C0;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .voice-btn:hover {
+            background: #0D47A1;
+        }
+
+        .stop-btn {
+            background: #C62828;
+        }
+
+        .stop-btn:hover {
+            background: #8E0000;
+        }
+
+        ol, ul {
+            padding-left: 18px;
+            margin: 0;
+            line-height: 1.7;
+            color: #37474F;
+        }
+.chatbot-fab {
+position: fixed;
+right: 22px;
+bottom: 22px;
+width: 58px;
+height: 58px;
+border-radius: 50%;
+border: none;
+background: #2E7D32;
+color: white;
+font-size: 24px;
+cursor: pointer;
+box-shadow: 0 8px 22px rgba(0,0,0,0.22);
+z-index: 999;
+}
+
+.chatbot-fab:hover {
+    background: #1B5E20;
+}
+
+.chatbot-box {
+    position: fixed;
+    right: 22px;
+    bottom: 92px;
+    width: 320px;
+    max-width: calc(100vw - 32px);
+    background: white;
+    border: 1px solid #C8E6C9;
+    border-radius: 18px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, #2E7D32, #1B5E20);
+    color: white;
+    padding: 12px 14px;
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.chatbot-body {
+    padding: 12px;
+    max-height: 360px;
+    overflow-y: auto;
+    background: #F9F6EF;
+}
+
+.chat-msg {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+.chat-msg.bot {
+    background: white;
+    border: 1px solid #C8E6C9;
+    color: #263238;
+}
+
+.chat-msg.user {
+    background: #E8F5E9;
+    border: 1px solid #C8E6C9;
+    color: #1B5E20;
+}
+
+.chatbot-actions {
+    padding: 10px;
+    border-top: 1px solid #E0E0E0;
+    background: white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chatbot-chip {
+    border: 1px solid #C8E6C9;
+    background: #F9F6EF;
+    border-radius: 999px;
+    padding: 8px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #2E7D32;
+}
+
+.chatbot-chip:hover {
+    background: #E8F5E9;
+}
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>    
+</head>
+<body>
+<div class="app">
+
+    <div class="header">
+        <h2>
+            {% if lang == "hi" %}
+                परिणाम रिपोर्ट
+            {% else %}
+                Result Report
+            {% endif %}
+        </h2>
+        <p>
+            {% if lang == "hi" %}
+                AI आधारित फसल रोग विश्लेषण, उपचार और रोकथाम सुझाव
+            {% else %}
+                AI-based crop disease analysis, treatment, and prevention guidance
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="section">
+
+        <div class="card">
+            <h3>
+                {% if lang == "hi" %}
+                    निदान सारांश
+                {% else %}
+                    Diagnosis Summary
+                {% endif %}
+            </h3>
+
+            <div class="grid">
+                <div class="box">
+                    <div class="label">
+                        {% if lang == "hi" %}रोग{% else %}Disease{% endif %}
+                    </div>
+                    <div class="value">{{ prediction }}</div>
+                </div>
+
+                <div class="box">
+                    <div class="label">
+                        {% if lang == "hi" %}गंभीरता स्तर{% else %}Severity Level{% endif %}
+                    </div>
+                    <div class="value">
+                        <span class="
+                            {% if severity == 'Severe' %}
+                                severity-badge severe
+                            {% elif severity == 'Moderate' %}
+                                severity-badge moderate
+                            {% elif severity == 'Mild' %}
+                                severity-badge mild
+                            {% elif severity == 'Healthy' %}
+                                severity-badge healthy
+                            {% else %}
+                                severity-badge moderate
+                            {% endif %}
+                        ">
+                            {% if lang == "hi" %}
+                                {% if severity == "Healthy" %}
+                                    स्वस्थ
+                                {% elif severity == "Mild" %}
+                                    हल्का
+                                {% elif severity == "Moderate" %}
+                                    मध्यम
+                                {% elif severity == "Severe" %}
+                                    गंभीर
+                                {% else %}
+                                    {{ severity }}
+                                {% endif %}
+                            {% else %}
+                                {{ severity }}
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="severity-note">
+                        {% if lang == "hi" %}
+                            {% if severity == "Healthy" %}
+                                पत्ती स्वस्थ दिखाई दे रही है।
+                            {% elif severity == "Mild" %}
+                                संक्रमण शुरुआती स्तर पर है।
+                            {% elif severity == "Moderate" %}
+                                संक्रमण मध्यम स्तर पर है और ध्यान देने की आवश्यकता है।
+                            {% elif severity == "Severe" %}
+                                संक्रमण गंभीर है और तुरंत उपचार की आवश्यकता है।
+                            {% else %}
+                                गंभीरता का अनुमान उपलब्ध है।
+                            {% endif %}
+                        {% else %}
+                            {% if severity == "Healthy" %}
+                                The leaf appears healthy.
+                            {% elif severity == "Mild" %}
+                                Infection appears at an early stage.
+                            {% elif severity == "Moderate" %}
+                                Infection is at a moderate stage and needs attention.
+                            {% elif severity == "Severe" %}
+                                Infection is severe and requires immediate action.
+                            {% else %}
+                                Severity estimate is available.
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="label">
+                        {% if lang == "hi" %}विश्वास स्कोर{% else %}Confidence Score{% endif %}
+                    </div>
+                    <div class="value">{{ confidence }}%</div>
+                </div>
+
+                <div class="box">
+                    <div class="label">AI</div>
+                    <div class="value">
+                        {% if lang == "hi" %}विश्लेषण{% else %}Analysis{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card meter-card">
+            <h3>
+                {% if lang == "hi" %}
+                    गंभीरता मीटर
+                {% else %}
+                    Severity Meter
+                {% endif %}
+            </h3>
+
+            <div class="meter-top">
+                <div class="value">
+                    {% if lang == "hi" %}
+                        {% if severity == "Healthy" %}
+                            स्वस्थ
+                        {% elif severity == "Mild" %}
+                            हल्का
+                        {% elif severity == "Moderate" %}
+                            मध्यम
+                        {% elif severity == "Severe" %}
+                            गंभीर
+                        {% else %}
+                            {{ severity }}
+                        {% endif %}
+                    {% else %}
+                        {{ severity }}
+                    {% endif %}
+                </div>
+                <div class="meter-percent" id="severityPercentText">0%</div>
+            </div>
+
+            <div class="meter-track">
+                <div class="meter-fill" id="severityFill"></div>
+            </div>
+
+            <div class="meter-scale">
+                <span>{% if lang == "hi" %}कम{% else %}Low{% endif %}</span>
+                <span>{% if lang == "hi" %}मध्यम{% else %}Medium{% endif %}</span>
+                <span>{% if lang == "hi" %}उच्च{% else %}High{% endif %}</span>
+            </div>
+
+            <div class="meter-note-text" id="severityMeterNote"></div>
+        </div>
+
+        <div class="card action-box" id="actionBox">
+            <h3>
+                {% if lang == "hi" %}
+                    अनुशंसित कार्यवाही
+                {% else %}
+                    Recommended Action
+                {% endif %}
+            </h3>
+
+            <div class="action-title" id="actionTitle"></div>
+            <div class="action-subtitle" id="actionSubtitle"></div>
+            <ul class="action-points" id="actionPoints"></ul>
+        </div>
+        <div class="card">
+             <h3>
+                {% if lang == "hi" %}
+                    पिछली जाँच (Last Results)
+                {% else %}
+                    Previous Analyses
+                {% endif %}
+            </h3>
+
+    <div id="historyContainer"></div>
+</div>
+
+<div class="card" id="weatherAdvisoryCard">
+    <h3>
+        {% if lang == "hi" %}
+            मौसम आधारित सलाह
+        {% else %}
+            Weather Advisory
+        {% endif %}
+    </h3>
+
+    <div id="weatherAdvisoryText" class="meter-note-text"></div>
+</div>
+
+
+        <div class="card">
+            <h3>
+                {% if lang == "hi" %}
+                    उपचार के चरण
+                {% else %}
+                    Treatment Steps
+                {% endif %}
+            </h3>
+
+            <ol>
+                {% for step in treatment_steps %}
+                    <li>{{ step }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="card">
+            <h3>
+                {% if lang == "hi" %}
+                    रोकथाम के सुझाव
+                {% else %}
+                    Prevention Tips
+                {% endif %}
+            </h3>
+
+            <ul>
+                {% for tip in prevention_steps %}
+                    <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>
+                {% if lang == "hi" %}
+                    अपलोड की गई छवि
+                {% else %}
+                    Uploaded Image
+                {% endif %}
+            </h3>
+            <img src="{{ uploaded_image }}" alt="Uploaded Image">
+        </div>
+
+        <div class="card">
+            <h3>
+                {% if lang == "hi" %}
+                    विश्लेषण छवि (Grad-CAM)
+                {% else %}
+                    Analysis Image (Grad-CAM)
+                {% endif %}
+            </h3>
+            <img src="{{ gradcam_image }}" alt="Grad-CAM Image">
+        </div>
+
+        <button class="voice-btn" onclick="speakSimpleResult()">
+            {% if lang == "hi" %}
+                🔊 परिणाम सुनें
+            {% else %}
+                🔊 Listen Result
+            {% endif %}
+        </button>
+
+        <button class="voice-btn stop-btn" onclick="stopSpeech()">
+            {% if lang == "hi" %}
+                ⏹ आवाज़ बंद करें
+            {% else %}
+                ⏹ Stop Voice
+            {% endif %}
+        </button>
+        <button class="btn" onclick="downloadReport()">
+            {% if lang == "hi" %}
+                📄 रिपोर्ट डाउनलोड करें
+            {% else %}
+                📄 Download Report
+            {% endif %}
+        </button>
+
+        <a href="/home" class="btn">
+            {% if lang == "hi" %}
+                नई जाँच करें
+            {% else %}
+                New Analysis
+            {% endif %}
+        </a>
+
+    </div>
+</div>
+
+
+<button class="chatbot-fab" onclick="toggleChatbot()">💬</button>
+
+<div class="chatbot-box" id="chatbotBox">
+    <div class="chatbot-header">
+        <span>
+            {% if lang == "hi" %}
+                Agro Saarthi सहायक
+            {% else %}
+                Agro Saarthi Assistant
+            {% endif %}
+        </span>
+        <button class="chatbot-close" onclick="toggleChatbot()">×</button>
+    </div>
+
+    <div class="chatbot-body" id="chatbotBody">
+        <div class="chat-msg bot">
+            {% if lang == "hi" %}
+                नमस्ते! मैं आपकी रिपोर्ट समझने में मदद कर सकता हूँ। नीचे कोई प्रश्न चुनें।
+            {% else %}
+                Hello! I can help explain your report. Choose a question below.
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="chatbot-actions">
+        <button class="chatbot-chip" onclick="askBot('severity')">
+            {% if lang == "hi" %}
+                यह कितना गंभीर है?
+            {% else %}
+                How serious is this?
+            {% endif %}
+        </button>
+
+        <button class="chatbot-chip" onclick="askBot('treatment')">
+            {% if lang == "hi" %}
+                अब क्या करना चाहिए?
+            {% else %}
+                What should I do now?
+            {% endif %}
+        </button>
+
+        <button class="chatbot-chip" onclick="askBot('prevention')">
+            {% if lang == "hi" %}
+                बचाव कैसे करें?
+            {% else %}
+                How to prevent it?
+            {% endif %}
+        </button>
+
+        <button class="chatbot-chip" onclick="askBot('summary')">
+            {% if lang == "hi" %}
+                पूरी रिपोर्ट समझाओ
+            {% else %}
+                Explain full report
+            {% endif %}
+        </button>
+    </div>
+</div>
+
+<script>
+let speechQueue = [];
+let currentUtterance = null;
+let speaking = false;
+
+function getPreferredVoice(langCode) {
+    const voices = window.speechSynthesis.getVoices();
+
+    if (langCode === "hi") {
+        return voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en-in"))
+            || voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en"))
+            || null;
+    } else {
+        return voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en-us"))
+            || voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en"))
+            || null;
+    }
+}
+
+function setupSeverityMeterAndActionBox() {
+    const lang = document.documentElement.lang;
+    const severity = "{{ severity }}";
+    const confidence = parseFloat("{{ confidence }}") || 0;
+
+    let percent = 0;
+    let meterNote = "";
+    let actionTitle = "";
+    let actionSubtitle = "";
+    let actionItems = [];
+    let actionBorderColor = "#F9A825";
+
+    if (severity === "Healthy") {
+        percent = Math.min(20, Math.max(5, Math.round(confidence * 0.15)));
+        actionBorderColor = "#2E7D32";
+
+        if (lang === "hi") {
+            meterNote = "फसल स्वस्थ दिखाई दे रही है। अभी नियमित देखभाल और निगरानी पर्याप्त है।";
+            actionTitle = "स्थिति सामान्य है";
+            actionSubtitle = "तुरंत उपचार की आवश्यकता नहीं है, लेकिन नियमित निरीक्षण जारी रखें।";
+            actionItems = [
+                "पत्तियों को समय-समय पर देखें",
+                "सिंचाई और पोषण संतुलित रखें",
+                "नए लक्षण दिखें तो दोबारा विश्लेषण करें"
+            ];
+        } else {
+            meterNote = "The crop appears healthy. Routine care and regular monitoring are sufficient for now.";
+            actionTitle = "Condition Looks Normal";
+            actionSubtitle = "No immediate treatment is needed, but continue regular observation.";
+            actionItems = [
+                "Inspect leaves from time to time",
+                "Maintain balanced watering and nutrition",
+                "Run analysis again if new symptoms appear"
+            ];
+        }
+    } else if (severity === "Mild") {
+        percent = Math.min(45, Math.max(25, Math.round(25 + confidence * 0.20)));
+        actionBorderColor = "#F9A825";
+
+        if (lang === "hi") {
+            meterNote = "संक्रमण शुरुआती चरण में है। समय पर ध्यान देने से इसे आसानी से नियंत्रित किया जा सकता है।";
+            actionTitle = "निगरानी और प्रारंभिक उपचार करें";
+            actionSubtitle = "स्थिति गंभीर नहीं है, लेकिन इसे नज़रअंदाज़ नहीं करना चाहिए।";
+            actionItems = [
+                "प्रभावित पत्तियों की पहचान करें",
+                "दिए गए उपचार चरणों का पालन करें",
+                "अगले कुछ दिनों तक नियमित निगरानी रखें"
+            ];
+        } else {
+            meterNote = "The infection is at an early stage. With timely care, it can usually be controlled easily.";
+            actionTitle = "Monitor and Start Early Treatment";
+            actionSubtitle = "The condition is not severe yet, but it should not be ignored.";
+            actionItems = [
+                "Identify the affected leaves",
+                "Follow the suggested treatment steps",
+                "Monitor the crop regularly for the next few days"
+            ];
+        }
+    } else if (severity === "Moderate") {
+        percent = Math.min(75, Math.max(50, Math.round(50 + confidence * 0.25)));
+        actionBorderColor = "#EF6C00";
+
+        if (lang === "hi") {
+            meterNote = "संक्रमण मध्यम स्तर पर है। समय पर कार्रवाई न करने पर यह तेजी से बढ़ सकता है।";
+            actionTitle = "जल्द कार्रवाई करें";
+            actionSubtitle = "उपचार और रोकथाम दोनों पर तुरंत ध्यान देना आवश्यक है।";
+            actionItems = [
+                "उपचार चरण तुरंत शुरू करें",
+                "संक्रमित हिस्सों को अलग रखें",
+                "रोज़ाना फसल की स्थिति की जांच करें"
+            ];
+        } else {
+            meterNote = "The infection is at a moderate level. Without timely action, it may spread further.";
+            actionTitle = "Take Action Soon";
+            actionSubtitle = "Immediate attention is needed for both treatment and prevention.";
+            actionItems = [
+                "Start treatment steps immediately",
+                "Separate infected portions if possible",
+                "Check the crop condition daily"
+            ];
+        }
+    } else {
+        percent = Math.min(100, Math.max(76, Math.round(75 + confidence * 0.25)));
+        actionBorderColor = "#C62828";
+
+        if (lang === "hi") {
+            meterNote = "संक्रमण गंभीर है। फसल को नुकसान से बचाने के लिए तुरंत उपचार आवश्यक है।";
+            actionTitle = "तुरंत कार्यवाही आवश्यक";
+            actionSubtitle = "यह उच्च जोखिम की स्थिति है और देरी से नुकसान बढ़ सकता है।";
+            actionItems = [
+                "तुरंत उपचार लागू करें",
+                "अधिक प्रभावित पत्तियों को हटाएँ",
+                "लगातार निगरानी और रोकथाम करें"
+            ];
+        } else {
+            meterNote = "The infection is severe. Immediate treatment is required to reduce crop damage.";
+            actionTitle = "Immediate Action Required";
+            actionSubtitle = "This is a high-risk condition and delay may increase crop loss.";
+            actionItems = [
+                "Apply treatment without delay",
+                "Remove heavily affected leaves",
+                "Maintain close monitoring and prevention"
+            ];
+        }
+    }
+
+    const severityFill = document.getElementById("severityFill");
+    const severityPercentText = document.getElementById("severityPercentText");
+    const severityMeterNote = document.getElementById("severityMeterNote");
+    const actionTitleEl = document.getElementById("actionTitle");
+    const actionSubtitleEl = document.getElementById("actionSubtitle");
+    const actionPointsEl = document.getElementById("actionPoints");
+    const actionBox = document.getElementById("actionBox");
+
+    if (severityPercentText) {
+        severityPercentText.textContent = percent + "%";
+    }
+
+    if (severityMeterNote) {
+        severityMeterNote.textContent = meterNote;
+    }
+
+    if (severityFill) {
+        setTimeout(function() {
+            severityFill.style.width = percent + "%";
+        }, 250);
+    }
+
+    if (actionTitleEl) {
+        actionTitleEl.textContent = actionTitle;
+    }
+
+    if (actionSubtitleEl) {
+        actionSubtitleEl.textContent = actionSubtitle;
+    }
+
+    if (actionPointsEl) {
+        actionPointsEl.innerHTML = "";
+        actionItems.forEach(function(item) {
+            const li = document.createElement("li");
+            li.textContent = item;
+            actionPointsEl.appendChild(li);
+        });
+    }
+
+    if (actionBox) {
+        actionBox.style.borderLeftColor = actionBorderColor;
+    }
+}
+
+function buildSpeechChunks() {
+    const lang = document.documentElement.lang;
+    const chunks = [];
+
+    if (lang === "hi") {
+        chunks.push("रोग: {{ prediction }}");
+        chunks.push("गंभीरता स्तर: {% if severity == 'Healthy' %}स्वस्थ{% elif severity == 'Mild' %}हल्का{% elif severity == 'Moderate' %}मध्यम{% elif severity == 'Severe' %}गंभीर{% else %}{{ severity }}{% endif %}");
+        chunks.push("विश्वास स्कोर: {{ confidence }} प्रतिशत");
+        chunks.push("उपचार के चरण");
+        {% for step in treatment_steps %}
+            chunks.push({{ step | tojson }});
+        {% endfor %}
+        chunks.push("रोकथाम के सुझाव");
+        {% for tip in prevention_steps %}
+            chunks.push({{ tip | tojson }});
+        {% endfor %}
+    } else {
+        chunks.push("Disease: {{ prediction }}");
+        chunks.push("Severity level: {{ severity }}");
+        chunks.push("Confidence score: {{ confidence }} percent");
+        chunks.push("Treatment steps");
+        {% for step in treatment_steps %}
+            chunks.push({{ step | tojson }});
+        {% endfor %}
+        chunks.push("Prevention tips");
+        {% for tip in prevention_steps %}
+            chunks.push({{ tip | tojson }});
+        {% endfor %}
+    }
+
+    return chunks;
+}
+
+function speakNextChunk(lang, voice) {
+    if (speechQueue.length === 0) {
+        speaking = false;
+        currentUtterance = null;
+        return;
+    }
+
+    const text = speechQueue.shift();
+    currentUtterance = new SpeechSynthesisUtterance(text);
+
+    if (lang === "hi") {
+        currentUtterance.lang = "en-IN";
+    } else {
+        currentUtterance.lang = "en-US";
+    }
+
+    if (voice) {
+        currentUtterance.voice = voice;
+    }
+
+    currentUtterance.rate = 0.92;
+    currentUtterance.pitch = 1;
+
+    currentUtterance.onend = function() {
+        if (speaking) {
+            speakNextChunk(lang, voice);
+        }
+    };
+
+    window.speechSynthesis.speak(currentUtterance);
+}
+
+function speakSimpleResult() {
+    stopSpeech();
+
+    const lang = document.documentElement.lang;
+    const voice = getPreferredVoice(lang);
+
+    speechQueue = buildSpeechChunks();
+    speaking = true;
+
+    speakNextChunk(lang, voice);
+}
+
+function stopSpeech() {
+    speaking = false;
+    speechQueue = [];
+    window.speechSynthesis.cancel();
+    currentUtterance = null;
+}
+
+window.speechSynthesis.onvoiceschanged = function () {
+    window.speechSynthesis.getVoices();
+};
+
+window.addEventListener("beforeunload", stopSpeech);
+document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+        stopSpeech();
+    }
+});
+function saveToHistory() {
+    const newEntry = {
+        disease: "{{ prediction }}",
+        severity: "{{ severity }}",
+        confidence: "{{ confidence }}"
+    };
+
+    let history = JSON.parse(localStorage.getItem("agro_history")) || [];
+
+    history.unshift(newEntry);
+    history = history.slice(0, 3);
+
+    localStorage.setItem("agro_history", JSON.stringify(history));
+}
+
+function translateSeverity(sev, lang) {
+    if (lang === "hi") {
+        if (sev === "Healthy") return "स्वस्थ";
+        if (sev === "Mild") return "हल्का";
+        if (sev === "Moderate") return "मध्यम";
+        if (sev === "Severe") return "गंभीर";
+    }
+    return sev;
+}
+
+function renderHistory() {
+    const container = document.getElementById("historyContainer");
+    if (!container) return;
+
+    const lang = document.documentElement.lang;
+    const history = JSON.parse(localStorage.getItem("agro_history")) || [];
+
+    if (history.length === 0) {
+        container.innerHTML = lang === "hi"
+            ? "<p>कोई पिछला डेटा उपलब्ध नहीं है।</p>"
+            : "<p>No previous data available.</p>";
+        return;
+    }
+
+    container.innerHTML = "";
+
+    history.forEach(item => {
+        const div = document.createElement("div");
+        div.style.border = "1px solid #C8E6C9";
+        div.style.borderRadius = "10px";
+        div.style.padding = "10px";
+        div.style.marginBottom = "8px";
+        div.style.background = "#F9F6EF";
+
+        div.innerHTML = `
+            <strong>${lang === "hi" ? "रोग" : "Disease"}:</strong> ${item.disease}<br>
+            <strong>${lang === "hi" ? "गंभीरता" : "Severity"}:</strong> ${translateSeverity(item.severity, lang)}<br>
+            <strong>${lang === "hi" ? "विश्वास" : "Confidence"}:</strong> ${item.confidence}%
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+function renderWeatherAdvisory() {
+    const advisoryText = document.getElementById("weatherAdvisoryText");
+    if (!advisoryText) return;
+
+    const lang = document.documentElement.lang;
+    const severity = "{{ severity }}";
+
+    let text = "";
+
+    if (lang === "hi") {
+        if (severity === "Healthy") {
+            text = "फसल अभी स्वस्थ दिखाई दे रही है। सामान्य मौसम में नियमित निरीक्षण करें, संतुलित सिंचाई रखें और नमी अधिक समय तक पत्तियों पर जमा न होने दें।";
+        } else if (severity === "Mild") {
+            text = "हल्के संक्रमण की स्थिति में अधिक नमी और लगातार गीली पत्तियों से बचें। सुबह के समय निरीक्षण करें और यदि मौसम नम हो तो रोग के फैलाव पर विशेष ध्यान दें।";
+        } else if (severity === "Moderate") {
+            text = "मध्यम स्तर के संक्रमण में नम मौसम, अधिक आर्द्रता और लगातार वर्षा जैसी परिस्थितियाँ रोग को बढ़ा सकती हैं। सिंचाई नियंत्रित रखें, पत्तियों का वायु प्रवाह बेहतर करें और नियमित निगरानी करें।";
+        } else {
+            text = "गंभीर संक्रमण की स्थिति में नम और बंद वातावरण रोग को तेजी से फैला सकता है। तुरंत उपचार करें, संक्रमित भागों को अलग करें और वर्षा या अधिक नमी वाले समय में अतिरिक्त सावधानी रखें।";
+        }
+    } else {
+        if (severity === "Healthy") {
+            text = "The crop currently appears healthy. Under normal weather conditions, continue routine inspection, maintain balanced irrigation, and avoid keeping leaves wet for long periods.";
+        } else if (severity === "Mild") {
+            text = "In mild infection cases, avoid excessive moisture and prolonged leaf wetness. Inspect the crop in the morning and pay extra attention during humid weather.";
+        } else if (severity === "Moderate") {
+            text = "For moderate infection, humid conditions, high moisture, and repeated rainfall may worsen disease spread. Control irrigation, improve air circulation around leaves, and monitor regularly.";
+        } else {
+            text = "In severe infection cases, humid and closed conditions can accelerate disease spread. Begin treatment immediately, isolate infected parts, and take extra care during rainy or high-moisture periods.";
+        }
+    }
+
+    advisoryText.textContent = text;
+}
+function downloadReport() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const lang = document.documentElement.lang;
+
+    const prediction = "{{ prediction }}";
+    const severity = "{{ severity }}";
+    const confidence = "{{ confidence }}";
+
+    let y = 20;
+
+    function addLine(text) {
+        doc.text(text, 10, y);
+        y += 10;
+    }
+
+    // Title
+    if (lang === "hi") {
+        addLine("Agro Saarthi रिपोर्ट");
+    } else {
+        addLine("Agro Saarthi Report");
+    }
+
+    addLine("-----------------------------");
+
+    // Disease
+    addLine((lang === "hi" ? "रोग: " : "Disease: ") + prediction);
+
+    // Severity (translated for Hindi)
+    let sevText = severity;
+    if (lang === "hi") {
+        if (severity === "Healthy") sevText = "स्वस्थ";
+        if (severity === "Mild") sevText = "हल्का";
+        if (severity === "Moderate") sevText = "मध्यम";
+        if (severity === "Severe") sevText = "गंभीर";
+    }
+
+    addLine((lang === "hi" ? "गंभीरता: " : "Severity: ") + sevText);
+
+    // Confidence
+    addLine((lang === "hi" ? "विश्वास स्कोर: " : "Confidence: ") + confidence + "%");
+
+    addLine("");
+
+    // Treatment
+    addLine(lang === "hi" ? "उपचार:" : "Treatment:");
+    {% for step in treatment_steps %}
+        addLine("- " + {{ step | tojson }});
+    {% endfor %}
+
+    addLine("");
+
+    // Prevention
+    addLine(lang === "hi" ? "रोकथाम:" : "Prevention:");
+    {% for tip in prevention_steps %}
+        addLine("- " + {{ tip | tojson }});
+    {% endfor %}
+
+    // Save PDF
+    doc.save("Agro_Saarthi_Report.pdf");
+}
+function toggleChatbot() {
+    const box = document.getElementById("chatbotBox");
+    if (!box) return;
+
+    if (box.style.display === "block") {
+        box.style.display = "none";
+    } else {
+        box.style.display = "block";
+    }
+}
+
+function addChatMessage(type, text) {
+    const body = document.getElementById("chatbotBody");
+    if (!body) return;
+
+    const div = document.createElement("div");
+    div.className = "chat-msg " + type;
+    div.textContent = text;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+}
+
+function getHindiSeverityText(severity) {
+    if (severity === "Healthy") return "स्वस्थ";
+    if (severity === "Mild") return "हल्का";
+    if (severity === "Moderate") return "मध्यम";
+    if (severity === "Severe") return "गंभीर";
+    return severity;
+}
+
+function askBot(type) {
+    const lang = document.documentElement.lang;
+    const prediction = "{{ prediction }}";
+    const severity = "{{ severity }}";
+    const confidence = "{{ confidence }}";
+    const treatmentSteps = [
+        {% for step in treatment_steps %}
+            {{ step | tojson }},
+        {% endfor %}
+    ];
+    const preventionSteps = [
+        {% for tip in prevention_steps %}
+            {{ tip | tojson }},
+        {% endfor %}
+    ];
+
+    let userText = "";
+    let botText = "";
+
+    if (type === "severity") {
+        userText = lang === "hi" ? "यह कितना गंभीर है?" : "How serious is this?";
+        if (lang === "hi") {
+            botText = "रिपोर्ट के अनुसार रोग का स्तर " + getHindiSeverityText(severity) +
+                " है और विश्वास स्कोर " + confidence + "% है।";
+        } else {
+            botText = "According to the report, the disease severity is " + severity +
+                " with a confidence score of " + confidence + "%.";
+        }
+    }
+
+    if (type === "treatment") {
+        userText = lang === "hi" ? "अब क्या करना चाहिए?" : "What should I do now?";
+        if (lang === "hi") {
+            botText = "अभी आपको यह करना चाहिए: " + (treatmentSteps[0] || "उपचार चरण देखें।");
+        } else {
+            botText = "You should start with this: " + (treatmentSteps[0] || "Please check the treatment steps.");
+        }
+    }
+
+    if (type === "prevention") {
+        userText = lang === "hi" ? "बचाव कैसे करें?" : "How to prevent it?";
+        if (lang === "hi") {
+            botText = "रोकथाम के लिए यह सुझाव उपयोगी है: " + (preventionSteps[0] || "रोकथाम सुझाव देखें।");
+        } else {
+            botText = "For prevention, this suggestion is useful: " + (preventionSteps[0] || "Please check the prevention tips.");
+        }
+    }
+
+    if (type === "summary") {
+        userText = lang === "hi" ? "पूरी रिपोर्ट समझाओ" : "Explain full report";
+        if (lang === "hi") {
+            botText = "रोग " + prediction + " पाया गया है। गंभीरता स्तर " +
+                getHindiSeverityText(severity) + " है। उपचार और रोकथाम के सुझाव नीचे दिए गए हैं।";
+        } else {
+            botText = "The detected disease is " + prediction + ". The severity level is " +
+                severity + ". Treatment and prevention suggestions are provided below.";
+        }
+    }
+
+    addChatMessage("user", userText);
+    addChatMessage("bot", botText);
+}
+document.addEventListener("DOMContentLoaded", function() {
+    setupSeverityMeterAndActionBox();
+    saveToHistory();
+    renderHistory();
+    renderWeatherAdvisory();
+});
+</script>
+
+</body>
+</html>

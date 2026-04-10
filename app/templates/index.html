@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="{{ 'hi' if lang == 'hi' else 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro Saarthi Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #E8F5E9 0%, #F9F6EF 100%);
+            color: #263238;
+        }
+
+        .app-shell {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: #F9F6EF;
+            box-shadow: 0 0 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .top-section {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            padding: 26px 18px 28px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+
+        .brand {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0 0 6px;
+        }
+
+        .tagline {
+            font-size: 15px;
+            opacity: 0.95;
+            margin: 0 0 18px;
+            line-height: 1.5;
+        }
+
+        .welcome-box {
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .welcome-box h3 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+
+        .welcome-box p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .section {
+            padding: 16px;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+            border: 1px solid #C8E6C9;
+            margin-top: -8px;
+        }
+
+        .main-card h2 {
+            margin: 0 0 10px;
+            color: #1B5E20;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .main-card p {
+            margin: 0 0 16px;
+            text-align: center;
+            color: #5F6B6D;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2E7D32;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #C8E6C9;
+            border-radius: 12px;
+            background: white;
+            margin-bottom: 10px;
+        }
+
+        .hint {
+            font-size: 13px;
+            color: #5F6B6D;
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
+
+        .predict-btn {
+            width: 100%;
+            background: #2E7D32;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .predict-btn:hover {
+            background: #1B5E20;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .feature-card, .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #C8E6C9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .feature-card h4,
+        .info-card h4 {
+            margin: 0 0 8px;
+            color: #2E7D32;
+            font-size: 16px;
+        }
+
+        .feature-card p,
+        .info-card p,
+        .info-card ul {
+            margin: 0;
+            color: #5F6B6D;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .wide-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #C8E6C9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-top: 12px;
+        }
+
+        .wide-card h4 {
+            margin: 0 0 10px;
+            color: #2E7D32;
+            font-size: 17px;
+        }
+
+        .crop-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .crop-tag {
+            background: #E8F5E9;
+            color: #1B5E20;
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .help-list {
+            padding-left: 18px;
+            margin: 0;
+            color: #5F6B6D;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .bottom-space {
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-shell">
+        <div class="top-section">
+            <div class="brand">Agro Saarthi</div>
+            <p class="tagline">
+                {% if lang == "hi" %}
+                    स्मार्ट फसल रोग पहचान और किसान सहायता प्रणाली
+                {% else %}
+                    Smart Crop Disease Detection and Farmer Assistance System
+                {% endif %}
+            </p>
+
+            <div class="welcome-box">
+                <h3>
+                    {% if lang == "hi" %}
+                        नमस्ते {{ name if name else "उपयोगकर्ता" }}
+                    {% else %}
+                        Hello {{ name if name else "User" }}
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if lang == "hi" %}
+                        आपकी फसल की पत्तियों का विश्लेषण करने, रोग पहचानने और उपचार सुझाव प्राप्त करने के लिए आपका स्वागत है।
+                    {% else %}
+                        Welcome to your crop analysis dashboard. Upload a leaf image to detect disease and get treatment guidance.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="main-card">
+                <h2>
+                    {% if lang == "hi" %}
+                        नई जाँच शुरू करें
+                    {% else %}
+                        Start New Analysis
+                    {% endif %}
+                </h2>
+
+                <p>
+                    {% if lang == "hi" %}
+                        टमाटर या आलू की पत्ती की तस्वीर अपलोड करें और AI आधारित रोग विश्लेषण प्राप्त करें।
+                    {% else %}
+                        Upload a tomato or potato leaf image to get AI-based disease analysis.
+                    {% endif %}
+                </p>
+
+                <form action="/home" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="lang" value="{{ lang }}">
+                    <input type="hidden" name="name" value="{{ name }}">
+
+                    <label for="leaf_image">
+                        {% if lang == "hi" %}
+                            पत्ती की तस्वीर चुनें
+                        {% else %}
+                            Select Leaf Image
+                        {% endif %}
+                    </label>
+
+                    <input type="file" name="leaf_image" id="leaf_image" accept="image/*" required>
+
+                    <div class="hint">
+                        {% if lang == "hi" %}
+                            वर्तमान प्रणाली चयनित टमाटर और आलू रोग वर्गों के लिए प्रशिक्षित है।
+                        {% else %}
+                            Current system is trained for selected tomato and potato disease classes.
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="predict-btn">
+                        {% if lang == "hi" %}
+                            रोग की पहचान करें
+                        {% else %}
+                            Predict Disease
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+
+            <div class="grid-2">
+                <div class="feature-card">
+                    <h4>
+                        {% if lang == "hi" %}रोग पहचान{% else %}Disease Detection{% endif %}
+                    </h4>
+                    <p>
+                        {% if lang == "hi" %}
+                            पत्ती की छवि से रोग की पहचान।
+                        {% else %}
+                            Detect crop disease from leaf image.
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>
+                        {% if lang == "hi" %}गंभीरता स्तर{% else %}Severity Level{% endif %}
+                    </h4>
+                    <p>
+                        {% if lang == "hi" %}
+                            रोग की तीव्रता का सरल अनुमान।
+                        {% else %}
+                            Simple severity estimation for detected disease.
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>
+                        {% if lang == "hi" %}उपचार सुझाव{% else %}Treatment Advice{% endif %}
+                    </h4>
+                    <p>
+                        {% if lang == "hi" %}
+                            रोग के अनुसार उपचार मार्गदर्शन।
+                        {% else %}
+                            Basic treatment recommendation based on disease.
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>
+                        {% if lang == "hi" %}Grad-CAM विश्लेषण{% else %}Grad-CAM Analysis{% endif %}
+                    </h4>
+                    <p>
+                        {% if lang == "hi" %}
+                            प्रभावित भागों का दृश्य विश्लेषण।
+                        {% else %}
+                            Visual explanation of affected image regions.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="wide-card">
+                <h4>
+                    {% if lang == "hi" %}समर्थित फसलें{% else %}Supported Crops{% endif %}
+                </h4>
+                <div class="crop-tags">
+                    <div class="crop-tag">
+                        {% if lang == "hi" %}टमाटर{% else %}Tomato{% endif %}
+                    </div>
+                    <div class="crop-tag">
+                        {% if lang == "hi" %}आलू{% else %}Potato{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="wide-card">
+                <h4>
+                    {% if lang == "hi" %}किसान सहायता{% else %}Farmer Help{% endif %}
+                </h4>
+                <ul class="help-list">
+                    {% if lang == "hi" %}
+                        <li>स्पष्ट पत्ती की तस्वीर लें।</li>
+                        <li>अच्छी रोशनी में फोटो अपलोड करें।</li>
+                        <li>एक समय में एक ही पत्ती चुनें।</li>
+                    {% else %}
+                        <li>Capture a clear leaf image.</li>
+                        <li>Upload the image in good lighting.</li>
+                        <li>Use one leaf image at a time.</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="bottom-space"></div>
+        </div>
+    </div>
+</body>
+</html>

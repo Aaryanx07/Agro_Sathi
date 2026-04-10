@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Agro Saarthi</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #F9F6EF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 420px;
+            background: white;
+            padding: 28px 22px;
+            border-radius: 18px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2E7D32;
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #C8E6C9;
+            border-radius: 10px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background: #2E7D32;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1B5E20;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>
+        {% if lang == "hi" %}
+            लॉगिन करें
+        {% else %}
+            Login to Agro Saarthi
+        {% endif %}
+    </h2>
+
+    <form action="/home" method="post">
+
+        <!-- VERY IMPORTANT: pass language forward -->
+        <input type="hidden" name="lang" value="{{ lang }}">
+
+        <label>
+            {% if lang == "hi" %}
+                पूरा नाम
+            {% else %}
+                Full Name
+            {% endif %}
+        </label>
+
+        <input type="text" name="name"
+        placeholder="{% if lang == 'hi' %}अपना नाम दर्ज करें{% else %}Enter your name{% endif %}" required>
+
+        <label>
+            {% if lang == "hi" %}
+                फोन नंबर
+            {% else %}
+                Phone Number
+            {% endif %}
+        </label>
+
+        <input type="text" name="phone"
+        placeholder="{% if lang == 'hi' %}फोन नंबर दर्ज करें{% else %}Enter phone number{% endif %}" required>
+
+        <button type="submit">
+            {% if lang == "hi" %}
+                आगे बढ़ें
+            {% else %}
+                Continue
+            {% endif %}
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
